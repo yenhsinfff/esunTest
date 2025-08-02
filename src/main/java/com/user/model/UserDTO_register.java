@@ -8,7 +8,7 @@ public class UserDTO_register{
 	private String userName; // 使用者名稱
 	private String email; //使用者電子信箱	
 	private String password; //使用者密碼
-	private Integer phone; //手機
+	private String phone; //手機
 	private MultipartFile coverImg; //封面照片
 	private String bio; //使用者自我介紹
 	
@@ -49,12 +49,12 @@ public class UserDTO_register{
 	}
 
 
-	public Integer getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 
 
-	public void setPhone(Integer phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
