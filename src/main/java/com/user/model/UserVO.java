@@ -5,11 +5,15 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "user")
 public class UserVO implements Serializable{
 	
 	@Id
@@ -29,10 +33,10 @@ public class UserVO implements Serializable{
 	@Column(name = "phone", nullable = false)
 	private Integer phone; //手機
 	
-	@Column(name = "coverImg", nullable = false, columnDefinition = "longblob")
+	@Column(name = "coverImage", nullable = false, columnDefinition = "longblob")
 	private byte[] coverImg; //封面照片
 	
-	@Column(name = "bio", nullable = false)
+	@Column(name = "biography", nullable = false)
 	private String bio; //使用者自我介紹
 	
 	
