@@ -1,0 +1,36 @@
+CREATE DATABASE IF NOT EXISTS esun;
+
+USE esun;
+
+CREATE TABLE user (
+  user_id INT AUTO_INCREMENT PRIMARY KEY,
+  user_name VARCHAR(10) NOT NULL,
+  email VARCHAR(50) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  phone CHAR(10) NOT NULL UNIQUE KEY,
+  cover_image LONGBLOB,
+  biography VARCHAR(50) NOT NULL
+  )AUTO_INCREMENT = 1001;
+  
+CREATE TABLE post (
+  post_id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  title VARCHAR(15) NOT NULL,
+  content VARCHAR(800) NOT NULL,
+  image LONGBLOB,
+  created_at DATETIME NOT NULL,
+  FOREIGN KEY(user_id) REFERENCES user(user_id)
+  )AUTO_INCREMENT = 2001;
+  
+CREATE TABLE comment (
+  comment_id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  post_id INT NOT NULL,
+  content VARCHAR(200) NOT NULL,
+  created_at DATETIME NOT NULL,
+  FOREIGN KEY(user_id) REFERENCES user(user_id),
+  FOREIGN KEY(post_id) REFERENCES post(post_id)
+  )AUTO_INCREMENT = 3001;
+
+
+
