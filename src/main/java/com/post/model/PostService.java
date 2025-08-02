@@ -1,6 +1,6 @@
 package com.post.model;
 
-import java.time.LocalDateTime;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,20 +18,37 @@ public class PostService {
 	}
 
 	// 新增文章
-	public PostVO addPost(PostVO postVO) {
-		System.out.println("OKK");
-		return postRepo.save(postVO);
+	public PostVO addPost(PostDTO_insert dto) throws IOException {
+
+		byte[] imageBytes = dto.getImg() != null ? dto.getImg().getBytes() : null;
+
+		PostVO post = new PostVO();
+		post.setUserId(dto.getUserId());
+		post.setTitle(dto.getTitle());
+		post.setContent(dto.getContent());
+		post.setImg(imageBytes);
+		return postRepo.save(post);
 	}
 
 	// 修改文章
-	public PostVO updatePost(PostVO postVO) {
-		return postRepo.save(postVO);
+	public PostVO updatePost(PostDTO_update dto) throws IOException{
+		byte[] imageBytes = dto.getImg() != null ? dto.getImg().getBytes() : null;
+		System.out.println("OKK");
+		PostVO post = postRepo.findById(dto.getPostId())
+				.orElseThrow(() -> new RuntimeException("找不到發文"));
+		post.setUserId(dto.getUserId());
+		post.setTitle(dto.getTitle());
+		post.setContent(dto.getContent());
+		post.setImg(imageBytes);
+		
+		return postRepo.save(post);
 	}
-	
+
 	// 刪除文章
-		public void deletePost(Integer postId) {
-			if(postRepo.existsById(postId))
+	public void deletePost(Integer postId) {
+		
+		if (postRepo.existsById(postId))
 			postRepo.deleteById(postId);
-		}
+	}
 
 }
