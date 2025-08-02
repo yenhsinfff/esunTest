@@ -26,8 +26,8 @@ public class UserController {
 	UserService userSvc;
 
 	// 註冊
-	// http://localhost:8081/user/addUser
-	@PostMapping("/addUser")
+	// http://localhost:8081/user/register
+	@PostMapping("/register")
 	public ResponseEntity<?> addUser(@ModelAttribute UserDTO_register dto) throws IOException {
 		UserVO saved = userSvc.addUser(dto);
 		ApiResponse<UserVO> successResponse = new ApiResponse<>("success", saved, "儲存成功");

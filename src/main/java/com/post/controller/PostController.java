@@ -27,11 +27,19 @@ public class PostController {
 	PostService postSvc;
 
 	// 列出所有文章
-	// http://localhost:8081/post/getPost
-	@GetMapping("/getPost")
-	public ResponseEntity<List<PostVO>> getPost() {
+	// http://localhost:8081/post/getAllPost
+	@GetMapping("/getAllPost")
+	public ResponseEntity<List<PostVO>> getAllPost() {
 		List<PostVO> posts = postSvc.getAll();
 		return ResponseEntity.ok(posts);
+	}
+
+	// 列出單一文章
+	// http://localhost:8081/post/getPost/2001
+	@GetMapping("/getPost/{postId}")
+	public ResponseEntity<?> getPost(@PathVariable Integer postId) {
+		PostVO post = postSvc.getByPostId(postId);
+		return ResponseEntity.ok(post);
 	}
 
 	// 新增文章
@@ -55,7 +63,7 @@ public class PostController {
 	// 刪除文章
 	// http://localhost:8081/post/deletePost/2003
 	@DeleteMapping("/deletePost/{postId}")
-	public ResponseEntity<?> deletePost(@PathVariable Integer postId){
+	public ResponseEntity<?> deletePost(@PathVariable Integer postId) {
 		postSvc.deletePost(postId);
 		ApiResponse<PostVO> successResponse = new ApiResponse<>("success", null, "刪除成功");
 		return ResponseEntity.ok(successResponse);
