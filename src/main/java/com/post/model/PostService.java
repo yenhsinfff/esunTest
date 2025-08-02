@@ -17,6 +17,12 @@ public class PostService {
 		return postRepo.findAll();
 	}
 
+	// 列出單一發文
+	public PostVO getByPostId(Integer postId) {
+	    return postRepo.findById(postId)
+	            .orElseThrow(() -> new RuntimeException("找不到該貼文"));
+	}
+
 	// 新增文章
 	public PostVO addPost(PostDTO_insert dto) throws IOException {
 
@@ -31,22 +37,21 @@ public class PostService {
 	}
 
 	// 修改文章
-	public PostVO updatePost(PostDTO_update dto) throws IOException{
+	public PostVO updatePost(PostDTO_update dto) throws IOException {
 		byte[] imageBytes = dto.getImg() != null ? dto.getImg().getBytes() : null;
 		System.out.println("OKK");
-		PostVO post = postRepo.findById(dto.getPostId())
-				.orElseThrow(() -> new RuntimeException("找不到發文"));
+		PostVO post = postRepo.findById(dto.getPostId()).orElseThrow(() -> new RuntimeException("找不到發文"));
 		post.setUserId(dto.getUserId());
 		post.setTitle(dto.getTitle());
 		post.setContent(dto.getContent());
 		post.setImg(imageBytes);
-		
+
 		return postRepo.save(post);
 	}
 
 	// 刪除文章
 	public void deletePost(Integer postId) {
-		
+
 		if (postRepo.existsById(postId))
 			postRepo.deleteById(postId);
 	}
