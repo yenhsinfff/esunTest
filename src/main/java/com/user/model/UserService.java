@@ -17,6 +17,14 @@ public class UserService {
 	
 	// 註冊使用者
 	public UserVO addUser(UserDTO_register dto) throws IOException {
+		
+		if(userRepo.existsByPhone(dto.getPhone())) {
+			throw new IllegalArgumentException("手機號碼已註冊，請使用其他號碼");
+		}
+		
+		if(userRepo.existsByEmail(dto.getEmail())) {
+			throw new IllegalArgumentException("Email已註冊，請使用其他信箱");
+		}
 
 		byte[] imageBytes = dto.getCoverImg() != null ? dto.getCoverImg().getBytes() : null;
 

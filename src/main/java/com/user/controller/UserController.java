@@ -3,6 +3,7 @@ package com.user.controller;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,9 +30,18 @@ public class UserController {
 	// http://localhost:8081/user/register
 	@PostMapping("/register")
 	public ResponseEntity<?> addUser(@ModelAttribute UserDTO_register dto) throws IOException {
+		
+		try {
 		UserVO saved = userSvc.addUser(dto);
 		ApiResponse<UserVO> successResponse = new ApiResponse<>("success", saved, "儲存成功");
 		return ResponseEntity.ok(successResponse);
+		} catch (IllegalArgumentException e){
+			ApiResponse<UserVO> errorResponse = new ApiResponse<>("error", null, e.getMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+		} catch (Exception e) {
+			ApiResponse<UserVO> errorResponse = new ApiResponse<>("error", null, "註冊失敗");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+		}
 	}
 
 	// 登入
