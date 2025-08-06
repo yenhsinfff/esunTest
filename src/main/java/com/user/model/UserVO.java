@@ -33,6 +33,7 @@ public class UserVO implements Serializable{
 	@Column(name = "phone", nullable = false)
 	private String phone; //手機
 	
+	@Lob
 	@Column(name = "coverImage", columnDefinition = "longblob")
 	private byte[] coverImg; //封面照片
 	
